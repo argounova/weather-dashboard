@@ -4,8 +4,20 @@ header{
 }
 
 h1{
+    font-family: 'Oxygen', sans-serif;;
     color: #f4f4f4;
     font-size: 48px;
     text-align: end;
     padding-right: 25%;
+}
+
+.bold{
+    font-family: 'Oxygen';
+    font-weight: bold;
+}
+
+img{
+    height: 48px;
+    width: auto;
+    padding-bottom: 10px;
 }
