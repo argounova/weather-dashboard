@@ -1,6 +1,7 @@
 var currentContainer = document.getElementById('currentCity');
+var zipInput = document.getElementById('locInput').textContent;
 var zip;
-var location;
+var areaName;
 var lat;
 var lon;
 var country;
@@ -15,13 +16,13 @@ function getGeo(requestGEO){
         })
         .then(function(data){
         console.log(data);
-            zip = data.zip;
-            location = data.name;
-            lat = data.lat;
-            lon = data.lon;
-            country = data.country;
+        zip = data.zip;
+        areaName = data.name;
+        lat = data.lat;
+        lon = data.lon;
+        country = data.country;
         console.log(zip);
-        console.log(location);
+        console.log(areaName);
         console.log(lat);
         console.log(lon);
         console.log(country);
@@ -52,5 +53,7 @@ function getGeo(requestGEO){
 //         });       
 // };
 
-getGeo(requestGEO);
+$('#button-addon2').click(getGeo(requestGEO));
+
+// getGeo(requestGEO);
 // getWeather(requestURL);
