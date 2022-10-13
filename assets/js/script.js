@@ -1,29 +1,32 @@
 var currentContainer = document.getElementById('currentCity');
 var zip;
-var name;
+var location;
 var lat;
 var lon;
 var country;
 
-// var requestGEO = "http://api.openweathermap.org/geo/1.0/zip?zip=34668,US&appid={78bc832eeac2a213024b0c9cb066c83c}";
+var requestGEO = "http://api.openweathermap.org/geo/1.0/zip?zip=34668,US&appid=78bc832eeac2a213024b0c9cb066c83c";
 // var requestURL = "http://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={78bc832eeac2a213024b0c9cb066c83c}";
 
-// function getGeo(requestGEO){
-//     fetch(requestGEO)
-//         .then(function(response){
-//         return response.json();
-//         })
-//         .then(function(data){
-//         console.log(data);
-//         for(var i = 0; i < data.lenth; i++){
-//             var zip = data.textContent = data[i].//insert zip tag here//;
-//             var name = data.textContent = data[i].//insert name tag here//;
-//             var lat = data.textContent = data[i].//insert lat tag here//;
-//             var lon = data.textContent = data[i].//insert lon tag here//;
-//             var country = data.textContent = data[i].//insert country tag here//;
-//         }
-//         });       
-// }
+function getGeo(requestGEO){
+    fetch(requestGEO)
+        .then(function(response){
+        return response.json();
+        })
+        .then(function(data){
+        console.log(data);
+            zip = data.zip;
+            location = data.name;
+            lat = data.lat;
+            lon = data.lon;
+            country = data.country;
+        console.log(zip);
+        console.log(location);
+        console.log(lat);
+        console.log(lon);
+        console.log(country);
+        });
+}
 
 // function getWeather(requestURL){
 //     fetch(requestURL)
@@ -49,5 +52,5 @@ var country;
 //         });       
 // };
 
-// getGeo(requestGEO);
+getGeo(requestGEO);
 // getWeather(requestURL);
