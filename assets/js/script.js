@@ -5,9 +5,27 @@ var areaName;
 var lat;
 var lon;
 var country;
-
-var requestGEO = "http://api.openweathermap.org/geo/1.0/zip?zip=34668,US&appid=78bc832eeac2a213024b0c9cb066c83c";
+var userZipInput;
+var requestGEO;
+var apiRootURL = 'http://api.openweathermap.org/geo/1.0/zip?';
+var requestGEO;
 // var requestURL = "http://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={78bc832eeac2a213024b0c9cb066c83c}";
+var x;
+
+$('input').keyup(function(e){
+    e.preventDefault();
+    userZipInput = $('input#locInput').val();
+});
+
+$('#button-addon2').click(function setZip(){
+    var paramsString ='zip=34668,US&appid=78bc832eeac2a213024b0c9cb066c83c';
+    var searchParams = new URLSearchParams(paramsString);
+    searchParams.set('zip', userZipInput);
+    x = searchParams.toString();
+    requestGEO = apiRootURL+x;
+    console.log(requestGEO);
+    getGeo(requestGEO);
+});
 
 function getGeo(requestGEO){
     fetch(requestGEO)
@@ -15,7 +33,7 @@ function getGeo(requestGEO){
         return response.json();
         })
         .then(function(data){
-        console.log(data);
+        // console.log(data);
         zip = data.zip;
         areaName = data.name;
         lat = data.lat;
@@ -28,6 +46,9 @@ function getGeo(requestGEO){
         console.log(country);
         });
 }
+
+
+
 
 // function getWeather(requestURL){
 //     fetch(requestURL)
@@ -52,8 +73,12 @@ function getGeo(requestGEO){
             // currentContainer.append(humidity);
 //         });       
 // };
-
-$('#button-addon2').click(getGeo(requestGEO));
+// $('input').keyup(function(e){
+//     e.preventDefault();
+//     console.log(e.target.value);
+//     userZipInput = $('input#locInput').val();
+//     console.log(userZipInput);
+// });
 
 // getGeo(requestGEO);
 // getWeather(requestURL);
