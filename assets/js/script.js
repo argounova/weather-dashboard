@@ -1,4 +1,4 @@
-var currentContainer = document.getElementById('currentCity');
+var currentContainer = document.querySelector('ul');
 var zipInput = document.getElementById('locInput').textContent;
 var zip;
 var areaName;
@@ -56,4 +56,21 @@ function setLatLon(){
     var x = searchParams.toString();
     requestURL = apiRootURL+x;
     console.log(requestURL);
+    getWeather();
+}
+
+function getWeather(){
+    fetch(requestURL)
+        .then(function(response){
+        return response.json();
+        })
+        .then(function(data){
+            console.log(data);
+            for (var i = 0; i < data.length; i++) {
+            var temperature = document.createElement('li');
+            temperature.textContent = data[i].list[0].main.temp;
+            console.log(temperature);
+            currentContainer.appendChild(temperature);    
+        }
+    });
 }
