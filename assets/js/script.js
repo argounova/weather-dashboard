@@ -87,12 +87,12 @@ function handleCurrentCity(data) {
     let cityName = data.city.name;
     // let date = dt.toLocaleString(DateTime.DATE_SHORT);
     let kTemp = data.list[0].main.temp;
-    let fTemp = 1.8 * (kTemp - 273) +32;
+    let fTemp = Math.round(1.8 * (kTemp - 273) +32);
     let kTempFeels = data.list[0].main.feels_like;
-    let fTempFeels = 1.8 * (kTempFeels - 273) +32;
+    let fTempFeels = Math.round(1.8 * (kTempFeels - 273) +32);
     let humidity = data.list[0].main.humidity;
     let skies = data.list[0].weather[0].description;
-    let windSpd = (data.list[0].wind.speed) * 1.150779;
+    let windSpd = ((data.list[0].wind.speed) * 1.150779).toFixed(1);
 
     // Create current city name
     newElement = document.createElement('h2');
@@ -101,27 +101,27 @@ function handleCurrentCity(data) {
 
     // Create current city temperature
     newElement = document.createElement('p');
-    newElement.append(fTemp);
+    newElement.append('Temperature: '+fTemp+'\u00B0F');
     document.getElementById('currentCity').append(newElement);
 
     // Create current city 'feels like' temperature
     newElement = document.createElement('p');
-    newElement.append(fTempFeels);
+    newElement.append('Feels like: '+fTempFeels+'\u00B0F');
     document.getElementById('currentCity').append(newElement);
 
     // Create current city humidity
     newElement = document.createElement('p');
-    newElement.append(humidity);
+    newElement.append('Humidity: '+humidity+'%');
     document.getElementById('currentCity').append(newElement);
 
     // Create current city skies
     newElement = document.createElement('p');
-    newElement.append(skies);
+    newElement.append('Skies: '+skies);
     document.getElementById('currentCity').append(newElement);
 
     // Create current city wind speed
     newElement = document.createElement('p');
-    newElement.append(windSpd);
+    newElement.append('Wind: '+windSpd+' mph');
     document.getElementById('currentCity').append(newElement);
 
     console.log(cityName);
