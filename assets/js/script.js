@@ -11,6 +11,7 @@ var apiRootGeoURL = 'http://api.openweathermap.org/geo/1.0/zip?';
 var requestGEO;
 var apiRootURL = 'http://api.openweathermap.org/data/2.5/forecast?';
 var requestURL;
+// const dt = DateTime.local();
 
 $('input').keyup(function(e){
     e.preventDefault();
@@ -23,7 +24,7 @@ $('#button-addon2').click(function setZip(){
     searchParams.set('zip', userZipInput);
     var x = searchParams.toString();
     requestGEO = apiRootGeoURL+x;
-    console.log(requestGEO);
+    // console.log(requestGEO);
     getGeo(requestGEO);
 });
 
@@ -39,11 +40,11 @@ function getGeo(requestGEO){
         lat = data.lat;
         lon = data.lon;
         country = data.country;
-        console.log(zip);
-        console.log(areaName);
-        console.log(lat);
-        console.log(lon);
-        console.log(country);
+        // console.log(zip);
+        // console.log(areaName);
+        // console.log(lat);
+        // console.log(lon);
+        // console.log(country);
         setLatLon();
         });
 }
@@ -55,7 +56,7 @@ function setLatLon(){
     searchParams.set('lon', lon);
     var x = searchParams.toString();
     requestURL = apiRootURL+x;
-    console.log(requestURL);
+    // console.log(requestURL);
     getWeather();
 }
 
@@ -65,12 +66,69 @@ function getWeather(){
         return response.json();
         })
         .then(function(data){
-            console.log(data);
-            for (var i = 0; i < data.length; i++) {
-            var temperature = document.createElement('li');
-            temperature.textContent = data[i].list[0].main.temp;
-            console.log(temperature);
-            currentContainer.appendChild(temperature);    
-        }
+            handleCurrentCity(data);
+            // console.log(data);
+            // console.log(data.list[0].main.temp);
+            // let kTemp = data.list[0].main.temp;
+            // let fTemp = 1.8 * (kTemp - 273) +32;
+            // console.log(fTemp);
+        //     for (var i = 0; i < data.length; i++) {
+        //     var temperature = document.createElement('li');
+        //     temperature.textContent = data[i].list[0].main.temp;
+        //     console.log(temperature);
+        //     currentContainer.appendChild(temperature);    
+        // }
     });
+}
+
+function handleCurrentCity(data) {
+    let newElement;
+    // let newContent;
+    let cityName = data.city.name;
+    // let date = dt.toLocaleString(DateTime.DATE_SHORT);
+    let kTemp = data.list[0].main.temp;
+    let fTemp = 1.8 * (kTemp - 273) +32;
+    let kTempFeels = data.list[0].main.feels_like;
+    let fTempFeels = 1.8 * (kTempFeels - 273) +32;
+    let humidity = data.list[0].main.humidity;
+    let skies = data.list[0].weather[0].description;
+    let windSpd = (data.list[0].wind.speed) * 1.150779;
+
+    // Create current city name
+    newElement = document.createElement('h2');
+    newElement.append(cityName);
+    document.getElementById('currentCity').append(newElement);
+
+    // Create current city temperature
+    newElement = document.createElement('p');
+    newElement.append(fTemp);
+    document.getElementById('currentCity').append(newElement);
+
+    // Create current city 'feels like' temperature
+    newElement = document.createElement('p');
+    newElement.append(fTempFeels);
+    document.getElementById('currentCity').append(newElement);
+
+    // Create current city humidity
+    newElement = document.createElement('p');
+    newElement.append(humidity);
+    document.getElementById('currentCity').append(newElement);
+
+    // Create current city skies
+    newElement = document.createElement('p');
+    newElement.append(skies);
+    document.getElementById('currentCity').append(newElement);
+
+    // Create current city wind speed
+    newElement = document.createElement('p');
+    newElement.append(windSpd);
+    document.getElementById('currentCity').append(newElement);
+
+    console.log(cityName);
+    // console.log(date);
+    console.log(fTemp);
+    console.log(fTempFeels);
+    console.log(humidity);
+    console.log(skies);
+    console.log(windSpd);
 }
