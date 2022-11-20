@@ -9,7 +9,7 @@ var userZipInput;
 var requestGEO;
 var apiRootGeoURL = 'http://api.openweathermap.org/geo/1.0/zip?';
 var requestGEO;
-var apiRootURL = 'http://api.openweathermap.org/data/2.5/forecast?';
+var apiRootURL = 'http://api.openweathermap.org/data/2.5/weather?';
 var requestURL;
 // const dt = DateTime.local();
 
@@ -66,12 +66,8 @@ function getWeather(){
         return response.json();
         })
         .then(function(data){
-            handleCurrentCity(data);
+            handleCurrent(data);
             // console.log(data);
-            // console.log(data.list[0].main.temp);
-            // let kTemp = data.list[0].main.temp;
-            // let fTemp = 1.8 * (kTemp - 273) +32;
-            // console.log(fTemp);
         //     for (var i = 0; i < data.length; i++) {
         //     var temperature = document.createElement('li');
         //     temperature.textContent = data[i].list[0].main.temp;
@@ -81,18 +77,14 @@ function getWeather(){
     });
 }
 
-function handleCurrentCity(data) {
+function handleCurrent(data) {
     let newElement;
-    // let newContent;
-    let cityName = data.city.name;
-    // let date = dt.toLocaleString(DateTime.DATE_SHORT);
-    let kTemp = data.list[0].main.temp;
-    let fTemp = Math.round(1.8 * (kTemp - 273) +32);
-    let kTempFeels = data.list[0].main.feels_like;
-    let fTempFeels = Math.round(1.8 * (kTempFeels - 273) +32);
-    let humidity = data.list[0].main.humidity;
-    let skies = data.list[0].weather[0].description;
-    let windSpd = ((data.list[0].wind.speed) * 1.150779).toFixed(1);
+    let cityName = data.name;
+    let fTemp = Math.round(1.8 * (data.main.temp - 273) +32);
+    let fTempFeels = Math.round(1.8 * (data.main.feels_like - 273) +32);
+    let humidity = data.main.humidity;
+    let skies = data.weather[0].description;
+    let windSpd = ((data.wind.speed) * 1.150779).toFixed(1);
 
     // Create current city name
     newElement = document.createElement('h2');
@@ -123,12 +115,4 @@ function handleCurrentCity(data) {
     newElement = document.createElement('p');
     newElement.append('Wind: '+windSpd+' mph');
     document.getElementById('currentCity').append(newElement);
-
-    console.log(cityName);
-    // console.log(date);
-    console.log(fTemp);
-    console.log(fTempFeels);
-    console.log(humidity);
-    console.log(skies);
-    console.log(windSpd);
 }
