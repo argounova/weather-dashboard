@@ -59,40 +59,33 @@ function setParams(){
     searchParams.set('exclude', `minutely,hourly,alerts`);
     searchParams.set('appid', appid);
     requestURL = openWeaApi+searchParams.toString();
-    console.log(requestURL);
-    // getCurrent();
+    // console.log(requestURL);
+    getWeather();
     // getForecast();
 }
 
-function getCurrent(){
+function getWeather(){
     fetch(requestURL)
         .then(function(response){
         return response.json();
         })
         .then(function(data){
+            console.log(data);
             handleCurrent(data);
-            // console.log(data);
-        //     for (var i = 0; i < data.length; i++) {
-        //     var temperature = document.createElement('li');
-        //     temperature.textContent = data[i].list[0].main.temp;
-        //     console.log(temperature);
-        //     currentContainer.appendChild(temperature);    
-        // }
     });
 }
 
 function handleCurrent(data) {
     let newElement;
-    let cityName = data.name;
-    let fTemp = Math.round(1.8 * (data.main.temp - 273) +32);
-    let fTempFeels = Math.round(1.8 * (data.main.feels_like - 273) +32);
-    let humidity = data.main.humidity;
-    let skies = data.weather[0].description;
-    let windSpd = ((data.wind.speed) * 1.150779).toFixed(1);
+    let fTemp = Math.round(1.8 * (data.current.temp - 273) +32);
+    let fTempFeels = Math.round(1.8 * (data.current.feels_like - 273) +32);
+    let humidity = data.current.humidity;
+    let skies = data.current.weather[0].main;
+    let windSpd = ((data.current.wind_speed) * 1.150779).toFixed(1);
 
     // Create current city name
     newElement = document.createElement('h2');
-    newElement.append(cityName);
+    newElement.append(areaName);
     document.getElementById('currentCity').append(newElement);
 
     // Create current city temperature
@@ -121,12 +114,38 @@ function handleCurrent(data) {
     document.getElementById('currentCity').append(newElement);
 }
 
-function getForecast() {
-    fetch(requestFC)
-        .then(function(response) {
-            return response.json();
-        })
-        .then(function(data) {
-            console.log(data);
-        });
+function handleForecast(data) {
+    for (var i = 1; i < 6; i++) {
+        let newElement;
+        let fTemp = Math.round(1.8 * (data.daily[i].temp.day - 273) +32);
+        let fTempFeels = Math.round(1.8 * (data.daily[i].feels_like.day - 273) +32);
+        let humidity = data.daily[i].humidity;
+        let skies = data.daily[i].weather[0].main;
+        let windSpd = ((data.daily[i].wind_speed) * 1.150779).toFixed(1);
+    
+        // Create forecasted temperature
+        newElement = document.createElement('p');
+        newElement.append('Temperature: '+fTemp+'\u00B0F');
+        document.getElementById('currentCity').append(newElement);
+
+        // Create forecasted 'feels like' temperature
+        newElement = document.createElement('p');
+        newElement.append('Feels like: '+fTempFeels+'\u00B0F');
+        document.getElementById('currentCity').append(newElement);
+
+        // Create forecasted humidity
+        newElement = document.createElement('p');
+        newElement.append('Humidity: '+humidity+'%');
+        document.getElementById('currentCity').append(newElement);
+
+        // Create forecasted skies
+        newElement = document.createElement('p');
+        newElement.append('Skies: '+skies);
+        document.getElementById('currentCity').append(newElement);
+
+        // Create forecasted wind speed
+        newElement = document.createElement('p');
+        newElement.append('Wind: '+windSpd+' mph');
+        document.getElementById('currentCity').append(newElement);
+    }
 }
