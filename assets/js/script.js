@@ -61,7 +61,6 @@ function setParams(){
     requestURL = openWeaApi+searchParams.toString();
     // console.log(requestURL);
     getWeather();
-    // getForecast();
 }
 
 function getWeather(){
@@ -72,6 +71,7 @@ function getWeather(){
         .then(function(data){
             console.log(data);
             handleCurrent(data);
+            handleForecast(data);
     });
 }
 
@@ -126,26 +126,26 @@ function handleForecast(data) {
         // Create forecasted temperature
         newElement = document.createElement('p');
         newElement.append('Temperature: '+fTemp+'\u00B0F');
-        document.getElementById('currentCity').append(newElement);
+        document.getElementById('forecast').append(newElement);
 
         // Create forecasted 'feels like' temperature
         newElement = document.createElement('p');
         newElement.append('Feels like: '+fTempFeels+'\u00B0F');
-        document.getElementById('currentCity').append(newElement);
+        document.getElementById('forecast').append(newElement);
 
         // Create forecasted humidity
         newElement = document.createElement('p');
         newElement.append('Humidity: '+humidity+'%');
-        document.getElementById('currentCity').append(newElement);
+        document.getElementById('forecast').append(newElement);
 
         // Create forecasted skies
         newElement = document.createElement('p');
         newElement.append('Skies: '+skies);
-        document.getElementById('currentCity').append(newElement);
+        document.getElementById('forecast').append(newElement);
 
         // Create forecasted wind speed
         newElement = document.createElement('p');
         newElement.append('Wind: '+windSpd+' mph');
-        document.getElementById('currentCity').append(newElement);
+        document.getElementById('forecast').append(newElement);
     }
 }
