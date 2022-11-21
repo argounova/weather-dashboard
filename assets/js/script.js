@@ -21,6 +21,15 @@ const setZip = document.getElementById('button-addon2');
 $('input').keyup(function(e){
     e.preventDefault();
     userInput = $('input#locInput').val();
+    if (!isNaN(userInput)) {
+        console.log('searching zip code...')
+        setZip.addEventListener('click', setZipParams);
+    } else if (isNaN(userInput)) {
+        console.log('searching city...')
+        setZip.addEventListener('click', setLocParams);
+    } else {
+        alert('Please enter a valid city name or zip code');
+    }
 });
 
 function setZipParams() {
