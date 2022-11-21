@@ -5,7 +5,7 @@ var areaName;
 var lat;
 var lon;
 var country;
-var userZipInput;
+let userInput = '';
 var requestGEO;
 var requestURL;
 const appid = '78bc832eeac2a213024b0c9cb066c83c';
@@ -13,22 +13,21 @@ const apiRootGeoURL = 'http://api.openweathermap.org/geo/1.0/zip?';
 const apiRootURL = 'http://api.openweathermap.org/data/2.5/weather?';
 const apiRootForecast = 'http://api.openweathermap.org/data/2.5/forecast/daily?'
 const openWeaApi = 'https://api.openweathermap.org/data/3.0/onecall?';
+const setZip = document.getElementById('button-addon2');
 // const dt = DateTime.local();
 
 $('input').keyup(function(e){
     e.preventDefault();
-    userZipInput = $('input#locInput').val();
+    userInput = $('input#locInput').val();
 });
 
-$('#button-addon2').click(function setZip(){
-    var paramsString = 'zip={zip},US&appid=78bc832eeac2a213024b0c9cb066c83c';
-    var searchParams = new URLSearchParams(paramsString);
-    searchParams.set('zip', userZipInput);
-    var x = searchParams.toString();
-    requestGEO = apiRootGeoURL+x;
-    // console.log(requestGEO);
+function setZipParams() {
+    let paramsString = 'zip={zip},US&appid=78bc832eeac2a213024b0c9cb066c83c';
+    let searchParams = new URLSearchParams(paramsString);
+    searchParams.set('zip', userInput);
+    requestGEO = apiRootGeoURL+searchParams.toString();
     getGeo(requestGEO);
-});
+}
 
 function getGeo(requestGEO){
     fetch(requestGEO)
@@ -157,3 +156,5 @@ function handleForecast(data) {
         document.getElementById(i).append(newElement);
     }
 }
+
+setZip.addEventListener('click', setZipParams);
