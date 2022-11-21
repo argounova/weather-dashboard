@@ -24,6 +24,7 @@ img {
 
 .forecastCard {
     display: flex;
+    flex-direction: column;
     height: fit-content;
     width: fit-content;
     background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,19,121,1) 6%, rgba(0,212,255,1) 100%);

@@ -116,7 +116,9 @@ function handleCurrent(data) {
 
 function handleForecast(data) {
     for (var i = 1; i < 6; i++) {
-        let newElement;
+        let newElementID = i;
+        let newDiv = '';
+        let newElement = '';
         let fTemp = Math.round(1.8 * (data.daily[i].temp.day - 273) +32);
         let fTempFeels = Math.round(1.8 * (data.daily[i].feels_like.day - 273) +32);
         let humidity = data.daily[i].humidity;
@@ -124,34 +126,34 @@ function handleForecast(data) {
         let windSpd = ((data.daily[i].wind_speed) * 1.150779).toFixed(1);
 
         // Create card
-        let newDiv = document.createElement('div');
+        newDiv = document.createElement('div');
         document.getElementById('forecast').append(newDiv);
-        newDiv.setAttribute('class', 'forecastCard');
-        newDiv.setAttribute('id', 'forecastCard');
+        newDiv.setAttribute('class', 'forecastCard col');
+        newDiv.setAttribute('id', i);
     
         // Create forecasted temperature
         newElement = document.createElement('p');
         newElement.append('Temperature: '+fTemp+'\u00B0F');
-        document.getElementById('forecastCard').append(newElement);
+        document.getElementById(i).append(newElement);
 
         // Create forecasted 'feels like' temperature
         newElement = document.createElement('p');
         newElement.append('Feels like: '+fTempFeels+'\u00B0F');
-        document.getElementById('forecastCard').append(newElement);
+        document.getElementById(i).append(newElement);
 
         // Create forecasted humidity
         newElement = document.createElement('p');
         newElement.append('Humidity: '+humidity+'%');
-        document.getElementById('forecastCard').append(newElement);
+        document.getElementById(i).append(newElement);
 
         // Create forecasted skies
         newElement = document.createElement('p');
         newElement.append('Skies: '+skies);
-        document.getElementById('forecastCard').append(newElement);
+        document.getElementById(i).append(newElement);
 
         // Create forecasted wind speed
         newElement = document.createElement('p');
         newElement.append('Wind: '+windSpd+' mph');
-        document.getElementById('forecastCard').append(newElement);
+        document.getElementById(i).append(newElement);
     }
 }
