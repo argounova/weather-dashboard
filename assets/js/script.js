@@ -122,30 +122,36 @@ function handleForecast(data) {
         let humidity = data.daily[i].humidity;
         let skies = data.daily[i].weather[0].main;
         let windSpd = ((data.daily[i].wind_speed) * 1.150779).toFixed(1);
+
+        // Create card
+        let newDiv = document.createElement('div');
+        document.getElementById('forecast').append(newDiv);
+        newDiv.setAttribute('class', 'forecastCard');
+        newDiv.setAttribute('id', 'forecastCard');
     
         // Create forecasted temperature
         newElement = document.createElement('p');
         newElement.append('Temperature: '+fTemp+'\u00B0F');
-        document.getElementById('forecast').append(newElement);
+        document.getElementById('forecastCard').append(newElement);
 
         // Create forecasted 'feels like' temperature
         newElement = document.createElement('p');
         newElement.append('Feels like: '+fTempFeels+'\u00B0F');
-        document.getElementById('forecast').append(newElement);
+        document.getElementById('forecastCard').append(newElement);
 
         // Create forecasted humidity
         newElement = document.createElement('p');
         newElement.append('Humidity: '+humidity+'%');
-        document.getElementById('forecast').append(newElement);
+        document.getElementById('forecastCard').append(newElement);
 
         // Create forecasted skies
         newElement = document.createElement('p');
         newElement.append('Skies: '+skies);
-        document.getElementById('forecast').append(newElement);
+        document.getElementById('forecastCard').append(newElement);
 
         // Create forecasted wind speed
         newElement = document.createElement('p');
         newElement.append('Wind: '+windSpd+' mph');
-        document.getElementById('forecast').append(newElement);
+        document.getElementById('forecastCard').append(newElement);
     }
 }

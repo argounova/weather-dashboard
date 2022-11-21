@@ -1,9 +1,9 @@
-header{
+header {
     background-color: rgb(2,0,36);
     background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,19,121,1) 6%, rgba(0,212,255,1) 100%);
 }
 
-h1{
+h1 {
     font-family: 'Oxygen', sans-serif;;
     color: #f4f4f4;
     font-size: 48px;
@@ -11,13 +11,25 @@ h1{
     padding-right: 25%;
 }
 
-.bold{
-    font-family: 'Oxygen';
-    font-weight: bold;
-}
-
-img{
+img {
     height: 48px;
     width: auto;
     padding-bottom: 10px;
 }
+
+.bold {
+    font-family: 'Oxygen';
+    font-weight: bold;
+}
+
+.forecastCard {
+    display: flex;
+    height: fit-content;
+    width: fit-content;
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,19,121,1) 6%, rgba(0,212,255,1) 100%);
+    border-radius: 5px;
+    box-shadow: 5px 7px 5px rgba(0,212,255,1);
+    font-family: 'Oxygen', sans-serif;;
+    color: #f4f4f4;
+}
+
