@@ -4,12 +4,14 @@ var zip;
 var areaName;
 var lat;
 var lon;
+var state;
 var country;
 let userInput = '';
-var requestGEO;
-var requestURL;
+let requestGEO = '';
+let requestURL = '';
 const appid = '78bc832eeac2a213024b0c9cb066c83c';
-const apiRootGeoURL = 'http://api.openweathermap.org/geo/1.0/zip?';
+const apiRootZipURL = 'http://api.openweathermap.org/geo/1.0/zip?';
+const apiRootLocURL = 'http://api.openweathermap.org/geo/1.0/direct?';
 const apiRootURL = 'http://api.openweathermap.org/data/2.5/weather?';
 const apiRootForecast = 'http://api.openweathermap.org/data/2.5/forecast/daily?'
 const openWeaApi = 'https://api.openweathermap.org/data/3.0/onecall?';
@@ -29,23 +31,32 @@ function setZipParams() {
     getGeo(requestGEO);
 }
 
+function setLocParams() {
+    let paramsString = 'q={city name},US&appid=78bc832eeac2a213024b0c9cb066c83c';
+    let searchParams = new URLSearchParams(paramsString);
+    searchParams.set('q', userInput.trim());
+    requestGEO = apiRootLocURL+searchParams.toString();
+    getGeo(requestGEO);
+}
+
 function getGeo(requestGEO){
     fetch(requestGEO)
         .then(function(response){
         return response.json();
         })
         .then(function(data){
-        // console.log(data);
-        zip = data.zip;
-        areaName = data.name;
-        lat = data.lat;
-        lon = data.lon;
-        country = data.country;
-        // console.log(zip);
-        // console.log(areaName);
-        // console.log(lat);
-        // console.log(lon);
-        // console.log(country);
+        console.log(data);
+        // zip = data.zip;
+        areaName = data[0].name;
+        state = data[0].state;
+        lat = data[0].lat;
+        lon = data[0].lon;
+        country = data[0].country;
+        console.log(zip);
+        console.log(areaName);
+        console.log(lat);
+        console.log(lon);
+        console.log(country);
         setParams();
         });
 }
@@ -84,7 +95,7 @@ function handleCurrent(data) {
 
     // Create current city name
     newElement = document.createElement('h2');
-    newElement.append(areaName);
+    newElement.append(`${areaName}, ${state}`);
     document.getElementById('currentCity').append(newElement);
 
     // Create current city temperature
@@ -157,4 +168,4 @@ function handleForecast(data) {
     }
 }
 
-setZip.addEventListener('click', setZipParams);
+setZip.addEventListener('click', setLocParams);
