@@ -30,9 +30,12 @@ function init(){
             x.setAttribute('id',slice[i]);
             x.setAttribute('type','button');
             // x.setAttribute('class','custom-button-class');
-            // x.addEventListener('click', function() {
-            //     searchRecentcity(x.innerHTML);
-            //     });
+            x.addEventListener('click', function() {
+                $('#currentCity').html('');
+                $('#forecast').html('');
+                userInput = x.innerHTML;
+                setLocParams(userInput);
+                });
             document.getElementById('recentSearch').append(x);
         }
     }
