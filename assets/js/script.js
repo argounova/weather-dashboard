@@ -1,26 +1,28 @@
-let zip = '';
 let areaName = '';
 let lat = '';
 let lon = '';
 let userInput = '';
 let requestGEO = '';
 let requestURL = '';
+let srchHist = [];
 const appid = '78bc832eeac2a213024b0c9cb066c83c';
 const apiRootZipURL = 'http://api.openweathermap.org/geo/1.0/zip?';
 const apiRootLocURL = 'http://api.openweathermap.org/geo/1.0/direct?';
 const openWeaApi = 'https://api.openweathermap.org/data/3.0/onecall?';
-const setZip = document.getElementById('button-addon2');
+const searchBtn = document.getElementById('button-addon2');
 
-$('input').keyup(function(e){
+searchBtn.addEventListener('click', function(e) {
     e.preventDefault();
+    $('#currentCity').html('');
+    $('#forecast').html('');
     userInput = $('input#locInput').val();
     if (!isNaN(userInput)) {
-        console.log('searching zip code...');
-        setZip.addEventListener('click', setZipParams);
+        setZipParams();
     } else if (isNaN(userInput)) {
-        console.log('searching city...');
-        setZip.addEventListener('click', setLocParams);
+        setLocParams();
     }
+    srchHist.unshift(userInput);
+    localStorage.setItem('city', JSON.stringify(srchHist));
 });
 
 function setZipParams() {
