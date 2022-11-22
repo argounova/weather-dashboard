@@ -29,7 +29,7 @@ function init(){
             x.innerHTML = slice[i];
             x.setAttribute('id',slice[i]);
             x.setAttribute('type','button');
-            // x.setAttribute('class','custom-button-class');
+            x.setAttribute('class','recentSrchBtn');
             x.addEventListener('click', function() {
                 $('#currentCity').html('');
                 $('#forecast').html('');
