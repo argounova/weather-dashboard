@@ -17,7 +17,7 @@ $('input').keyup(function(e){
     if (!isNaN(userInput)) {
         console.log('searching zip code...');
         setZip.addEventListener('click', setZipParams);
-    } else {
+    } else if (isNaN(userInput)) {
         console.log('searching city...');
         setZip.addEventListener('click', setLocParams);
     }
@@ -58,7 +58,6 @@ function getGeoLoc(requestGEO){
         return response.json();
         })
         .then(function(data){
-        console.log(data);
         areaName = data[0].name;
         lat = data[0].lat;
         lon = data[0].lon;
@@ -83,7 +82,6 @@ function getWeather(){
         return response.json();
         })
         .then(function(data){
-            console.log(data);
             handleCurrent(data);
             handleForecast(data);
     });
@@ -171,5 +169,3 @@ function handleForecast(data) {
         document.getElementById(i).append(newElement);
     }
 }
-
-setZip.addEventListener('click', setLocParams);
