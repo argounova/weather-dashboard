@@ -61,6 +61,7 @@ img {
     margin: 8px;
     font-family: 'Oxygen';
     font-size: 1.25rem;
+    text-transform: capitalize;
 }
 
 button.recentSrchBtn:hover {

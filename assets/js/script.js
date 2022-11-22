@@ -24,7 +24,7 @@ function init(){
             for (i = 0; i < srchHist.length; i++){
             let x = document.createElement('button');
             x.innerHTML = srchHist[i];
-            x.innerHTML = x.innerHTML.charAt(0).toUpperCase()+x.innerHTML.slice(1);
+            x.innerHTML = x.innerHTML.toLowerCase();
             x.setAttribute('id', srchHist[i]);
             x.setAttribute('type','button');
             x.setAttribute('class','recentSrchBtn');
