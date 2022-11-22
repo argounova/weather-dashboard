@@ -1,43 +1,34 @@
-var currentContainer = document.querySelector('ul');
-var zipInput = document.getElementById('locInput').textContent;
-var zip;
-var areaName;
-var lat;
-var lon;
-var state;
-var country;
+let zip = '';
+let areaName = '';
+let lat = '';
+let lon = '';
 let userInput = '';
 let requestGEO = '';
 let requestURL = '';
 const appid = '78bc832eeac2a213024b0c9cb066c83c';
 const apiRootZipURL = 'http://api.openweathermap.org/geo/1.0/zip?';
 const apiRootLocURL = 'http://api.openweathermap.org/geo/1.0/direct?';
-const apiRootURL = 'http://api.openweathermap.org/data/2.5/weather?';
-const apiRootForecast = 'http://api.openweathermap.org/data/2.5/forecast/daily?'
 const openWeaApi = 'https://api.openweathermap.org/data/3.0/onecall?';
 const setZip = document.getElementById('button-addon2');
-// const dt = DateTime.local();
 
 $('input').keyup(function(e){
     e.preventDefault();
     userInput = $('input#locInput').val();
     if (!isNaN(userInput)) {
-        console.log('searching zip code...')
+        console.log('searching zip code...');
         setZip.addEventListener('click', setZipParams);
-    } else if (isNaN(userInput)) {
-        console.log('searching city...')
-        setZip.addEventListener('click', setLocParams);
     } else {
-        alert('Please enter a valid city name or zip code');
+        console.log('searching city...');
+        setZip.addEventListener('click', setLocParams);
     }
 });
 
 function setZipParams() {
     let paramsString = 'zip={zip},US&appid=78bc832eeac2a213024b0c9cb066c83c';
     let searchParams = new URLSearchParams(paramsString);
-    searchParams.set('zip', userInput);
-    requestGEO = apiRootGeoURL+searchParams.toString();
-    getGeo(requestGEO);
+    searchParams.set('zip', userInput.trim());
+    requestGEO = apiRootZipURL+searchParams.toString();
+    getGeoZip(requestGEO);
 }
 
 function setLocParams() {
@@ -45,27 +36,32 @@ function setLocParams() {
     let searchParams = new URLSearchParams(paramsString);
     searchParams.set('q', userInput.trim());
     requestGEO = apiRootLocURL+searchParams.toString();
-    getGeo(requestGEO);
+    getGeoLoc(requestGEO);
 }
 
-function getGeo(requestGEO){
+function getGeoZip(requestGEO){
+    fetch(requestGEO)
+        .then(function(response){
+        return response.json();
+        })
+        .then(function(data){
+        areaName = data.name;
+        lat = data.lat;
+        lon = data.lon;
+        setParams();
+        });
+}
+
+function getGeoLoc(requestGEO){
     fetch(requestGEO)
         .then(function(response){
         return response.json();
         })
         .then(function(data){
         console.log(data);
-        // zip = data.zip;
         areaName = data[0].name;
-        state = data[0].state;
         lat = data[0].lat;
         lon = data[0].lon;
-        country = data[0].country;
-        console.log(zip);
-        console.log(areaName);
-        console.log(lat);
-        console.log(lon);
-        console.log(country);
         setParams();
         });
 }
@@ -78,7 +74,6 @@ function setParams(){
     searchParams.set('exclude', `minutely,hourly,alerts`);
     searchParams.set('appid', appid);
     requestURL = openWeaApi+searchParams.toString();
-    // console.log(requestURL);
     getWeather();
 }
 
@@ -104,7 +99,7 @@ function handleCurrent(data) {
 
     // Create current city name
     newElement = document.createElement('h2');
-    newElement.append(`${areaName}, ${state}`);
+    newElement.append(areaName);
     document.getElementById('currentCity').append(newElement);
 
     // Create current city temperature
