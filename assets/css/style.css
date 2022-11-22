@@ -11,6 +11,18 @@ h1 {
     padding-right: 25%;
 }
 
+h2 {
+    font-family: 'Oxygen', sans-serif;;
+    font-size: 36px;
+}
+
+h3 {
+    font-family: 'Oxygen', sans-serif;;
+    font-size: 36px;
+    text-align: center;
+    font-style: italic;
+}
+
 img {
     height: 48px;
     width: auto;

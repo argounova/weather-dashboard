@@ -10,24 +10,22 @@ const apiRootZipURL = 'http://api.openweathermap.org/geo/1.0/zip?';
 const apiRootLocURL = 'http://api.openweathermap.org/geo/1.0/direct?';
 const openWeaApi = 'https://api.openweathermap.org/data/3.0/onecall?';
 const searchBtn = document.getElementById('button-addon2');
+const searchIpt = document.getElementById('locInput');
 
 function init(){
-    console.log(localStorage.getItem('city'));
     if (localStorage.getItem('city') === null) {
         return;
     } else {
-        srchHist = JSON.parse(localStorage.getItem('city'));
-        var slice = srchHist.slice(0,6);
-        var d = document.createElement('p');
-        var e = document.createTextNode('Recent Searches');
-        d.append(e);
-        // d.setAttribute('class','recent-searches');
-        document.getElementById('recentSearch').append(d);
-        console.log(slice);
-            for (i = 0; i < slice.length; i++){
+        srchHist = JSON.parse(localStorage.getItem('city')).slice(0,6);
+        let h3Tag = document.createElement('h3')
+        let txtNode = document.createTextNode('Recent Searches');
+        h3Tag.append(txtNode);
+        document.getElementById('recentSearch').append(h3Tag);
+            for (i = 0; i < srchHist.length; i++){
             let x = document.createElement('button');
-            x.innerHTML = slice[i];
-            x.setAttribute('id',slice[i]);
+            x.innerHTML = srchHist[i];
+            x.innerHTML = x.innerHTML.charAt(0).toUpperCase()+x.innerHTML.slice(1);
+            x.setAttribute('id', srchHist[i]);
             x.setAttribute('type','button');
             x.setAttribute('class','recentSrchBtn');
             x.addEventListener('click', function() {
@@ -53,6 +51,22 @@ searchBtn.addEventListener('click', function(e) {
     }
     srchHist.unshift(userInput);
     localStorage.setItem('city', JSON.stringify(srchHist));
+});
+
+searchIpt.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        $('#currentCity').html('');
+        $('#forecast').html('');
+        userInput = $('input#locInput').val();
+        if (!isNaN(userInput)) {
+            setZipParams();
+        } else if (isNaN(userInput)) {
+            setLocParams();
+        }
+        srchHist.unshift(userInput);
+        localStorage.setItem('city', JSON.stringify(srchHist));
+    }
 });
 
 function setZipParams() {
