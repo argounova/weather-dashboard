@@ -11,6 +11,33 @@ const apiRootLocURL = 'http://api.openweathermap.org/geo/1.0/direct?';
 const openWeaApi = 'https://api.openweathermap.org/data/3.0/onecall?';
 const searchBtn = document.getElementById('button-addon2');
 
+function init(){
+    console.log(localStorage.getItem('city'));
+    if (localStorage.getItem('city') === null) {
+        return;
+    } else {
+        srchHist = JSON.parse(localStorage.getItem('city'));
+        var slice = srchHist.slice(0,6);
+        var d = document.createElement('p');
+        var e = document.createTextNode('Recent Searches');
+        d.append(e);
+        // d.setAttribute('class','recent-searches');
+        document.getElementById('recentSearch').append(d);
+        console.log(slice);
+            for (i = 0; i < slice.length; i++){
+            let x = document.createElement('button');
+            x.innerHTML = slice[i];
+            x.setAttribute('id',slice[i]);
+            x.setAttribute('type','button');
+            // x.setAttribute('class','custom-button-class');
+            // x.addEventListener('click', function() {
+            //     searchRecentcity(x.innerHTML);
+            //     });
+            document.getElementById('recentSearch').append(x);
+        }
+    }
+}
+
 searchBtn.addEventListener('click', function(e) {
     e.preventDefault();
     $('#currentCity').html('');
@@ -171,3 +198,5 @@ function handleForecast(data) {
         document.getElementById(i).append(newElement);
     }
 }
+
+init();
