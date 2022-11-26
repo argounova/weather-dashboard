@@ -170,6 +170,22 @@ function handleCurrent(data) {
     newElement = document.createElement('p');
     newElement.append('Wind: '+windSpd+' mph');
     document.getElementById('currentCity').append(newElement);
+
+    // Add button for current search under recent searches
+    // This same button will be created from local storage if/when the page is reloaded
+    let x = document.createElement('button');
+        x.innerHTML = areaName;
+        x.innerHTML = x.innerHTML.toLowerCase();
+        x.setAttribute('id', areaName);
+        x.setAttribute('type','button');
+        x.setAttribute('class','recentSrchBtn');
+        x.addEventListener('click', function() {
+            $('#currentCity').html('');
+            $('#forecast').html('');
+            userInput = x.innerHTML;
+            setLocParams(userInput);
+            });
+        document.getElementById('recentSearch').append(x);
 }
 
 function handleForecast(data) {
