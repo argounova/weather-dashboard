@@ -134,6 +134,10 @@ function getWeather(){
 }
 
 function handleCurrent(data) {
+    const date = new Date();
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
     let newElement;
     let fTemp = Math.round(1.8 * (data.current.temp - 273) +32);
     let fTempFeels = Math.round(1.8 * (data.current.feels_like - 273) +32);
@@ -144,6 +148,11 @@ function handleCurrent(data) {
     // Create current city name
     newElement = document.createElement('h2');
     newElement.append(areaName);
+    document.getElementById('currentCity').append(newElement);
+
+    // Create date
+    newElement = document.createElement('h4');
+    newElement.append(`${month}/${day}/${year}`);
     document.getElementById('currentCity').append(newElement);
 
     // Create current city temperature
@@ -189,6 +198,10 @@ function handleCurrent(data) {
 }
 
 function handleForecast(data) {
+    const date = new Date();
+    let day = date.getDate() + 1;
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
     for (var i = 1; i < 6; i++) {
         let newElementID = i;
         let newDiv = '';
@@ -204,7 +217,12 @@ function handleForecast(data) {
         document.getElementById('forecast').append(newDiv);
         newDiv.setAttribute('class', 'forecastCard col');
         newDiv.setAttribute('id', i);
-    
+
+        // Create date
+        newElement = document.createElement('h5');
+        newElement.append(`${month}/${day++}/${year}`);
+        document.getElementById(i).append(newElement);
+
         // Create forecasted temperature
         newElement = document.createElement('p');
         newElement.append('Temperature: '+fTemp+'\u00B0F');

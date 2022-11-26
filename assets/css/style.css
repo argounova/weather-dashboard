@@ -23,6 +23,18 @@ h3 {
     font-style: italic;
 }
 
+h4 {
+    font-family: 'Oxygen', sans-serif;;
+    font-size: 30px;
+}
+
+h5 {
+    font-family: 'Oxygen', sans-serif;;
+    font-size: 18px;
+    padding-top: 10px;
+    font-weight: bold;
+}
+
 img {
     height: 48px;
     width: auto;
