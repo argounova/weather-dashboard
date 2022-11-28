@@ -4,11 +4,13 @@ let lon = '';
 let userInput = '';
 let requestGEO = '';
 let requestURL = '';
+let requestIcon = '';
 let srchHist = [];
 const appid = '78bc832eeac2a213024b0c9cb066c83c';
 const apiRootZipURL = 'http://api.openweathermap.org/geo/1.0/zip?';
 const apiRootLocURL = 'http://api.openweathermap.org/geo/1.0/direct?';
 const openWeaApi = 'https://api.openweathermap.org/data/3.0/onecall?';
+let iconIdURL = 'http://openweathermap.org/img/wn/';
 const searchBtn = document.getElementById('button-addon2');
 const searchIpt = document.getElementById('locInput');
 
@@ -122,12 +124,19 @@ function setParams(){
     getWeather();
 }
 
+function setIconParams(iconId){
+    let paramsString = `${iconId}@2x.png`;
+    requestIcon = iconIdURL+paramsString.toString();
+    return requestIcon;
+}
+
 function getWeather(){
     fetch(requestURL)
         .then(function(response){
         return response.json();
         })
         .then(function(data){
+            console.log(data);
             handleCurrent(data);
             handleForecast(data);
     });
@@ -144,11 +153,22 @@ function handleCurrent(data) {
     let humidity = data.current.humidity;
     let skies = data.current.weather[0].main;
     let windSpd = ((data.current.wind_speed) * 1.150779).toFixed(1);
+    let iconId = data.current.weather[0].icon;
+
+    setIconParams(iconId);
 
     // Create current city name
     newElement = document.createElement('h2');
+    newElement.setAttribute('id', 'iconId')
     newElement.append(areaName);
     document.getElementById('currentCity').append(newElement);
+
+    // Create weather icon
+    newElement = document.createElement('img');
+    newElement.setAttribute('src', requestIcon);
+    let span = document.createElement('span');
+    span.append(newElement);
+    document.getElementById('iconId').append(span);
 
     // Create date
     newElement = document.createElement('h4');
@@ -203,7 +223,6 @@ function handleForecast(data) {
     let month = date.getMonth() + 1;
     let year = date.getFullYear();
     for (var i = 1; i < 6; i++) {
-        let newElementID = i;
         let newDiv = '';
         let newElement = '';
         let fTemp = Math.round(1.8 * (data.daily[i].temp.day - 273) +32);
