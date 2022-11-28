@@ -230,6 +230,9 @@ function handleForecast(data) {
         let humidity = data.daily[i].humidity;
         let skies = data.daily[i].weather[0].main;
         let windSpd = ((data.daily[i].wind_speed) * 1.150779).toFixed(1);
+        let iconId = data.daily[i].weather[0].icon;
+
+        setIconParams(iconId);
 
         // Create card
         newDiv = document.createElement('div');
@@ -239,8 +242,16 @@ function handleForecast(data) {
 
         // Create date
         newElement = document.createElement('h5');
+        newElement.setAttribute('id', 'iconId' + i);
         newElement.append(`${month}/${day++}/${year}`);
         document.getElementById(i).append(newElement);
+
+        // Create weather icon
+        newElement = document.createElement('img');
+        newElement.setAttribute('src', requestIcon);
+        let span = document.createElement('span');
+        span.append(newElement);
+        document.getElementById('iconId' + i).append(span);
 
         // Create forecasted temperature
         newElement = document.createElement('p');
