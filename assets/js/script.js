@@ -154,11 +154,17 @@ function handleCurrent(data) {
 
     setIconParams(iconId);
 
+    // Create current weather card
+    newDiv = document.createElement('div');
+    newDiv.setAttribute('class', 'currentWC col');
+    newDiv.setAttribute('id', 'currentWC');
+    document.getElementById('currentCity').append(newDiv);
+
     // Create current city name
     newElement = document.createElement('h2');
     newElement.setAttribute('id', 'iconId')
     newElement.append(areaName);
-    document.getElementById('currentCity').append(newElement);
+    document.getElementById('currentWC').append(newElement);
 
     // Create weather icon
     newElement = document.createElement('img');
@@ -170,32 +176,32 @@ function handleCurrent(data) {
     // Create date
     newElement = document.createElement('h4');
     newElement.append(date.toDateString());
-    document.getElementById('currentCity').append(newElement);
+    document.getElementById('currentWC').append(newElement);
 
     // Create current city temperature
     newElement = document.createElement('p');
     newElement.append('Temperature: '+fTemp+'\u00B0F');
-    document.getElementById('currentCity').append(newElement);
+    document.getElementById('currentWC').append(newElement);
 
     // Create current city 'feels like' temperature
     newElement = document.createElement('p');
     newElement.append('Feels like: '+fTempFeels+'\u00B0F');
-    document.getElementById('currentCity').append(newElement);
+    document.getElementById('currentWC').append(newElement);
 
     // Create current city humidity
     newElement = document.createElement('p');
     newElement.append('Humidity: '+humidity+'%');
-    document.getElementById('currentCity').append(newElement);
+    document.getElementById('currentWC').append(newElement);
 
     // Create current city skies
     newElement = document.createElement('p');
     newElement.append('Skies: '+skies);
-    document.getElementById('currentCity').append(newElement);
+    document.getElementById('currentWC').append(newElement);
 
     // Create current city wind speed
     newElement = document.createElement('p');
     newElement.append('Wind: '+windSpd+' mph');
-    document.getElementById('currentCity').append(newElement);
+    document.getElementById('currentWC').append(newElement);
 
     // Add button for current search under recent searches
     // This same button will be created from local storage if/when the page is reloaded
@@ -234,19 +240,29 @@ function handleForecast(data) {
 
         // Create card
         newDiv = document.createElement('div');
-        document.getElementById('forecast').append(newDiv);
         newDiv.setAttribute('class', 'forecastCard col');
         newDiv.setAttribute('id', i);
+        document.getElementById('forecast').append(newDiv);
+
+        // Create title div
+        newDiv = document.createElement('div');
+        newDiv.setAttribute('id', 'title' + i);
+        newDiv.setAttribute('style', 'display: flex');
+        newDiv.setAttribute('style', 'width: 100%;');
+        document.getElementById(i).append(newDiv);
 
         // Create date
         newElement = document.createElement('h5');
         newElement.setAttribute('id', 'iconId' + i);
+        newDiv.setAttribute('style', 'align-items: center;');
         newElement.append(`${month}/${day}/${year}`);
-        document.getElementById(i).append(newElement);
+        document.getElementById('title' + i).append(newElement);
 
         // Create weather icon
         newElement = document.createElement('img');
         newElement.setAttribute('src', requestIcon);
+        newElement.setAttribute('style', 'float: right;')
+        newDiv.setAttribute('style', 'align-items: center;');
         let span = document.createElement('span');
         span.append(newElement);
         document.getElementById('iconId' + i).append(span);
