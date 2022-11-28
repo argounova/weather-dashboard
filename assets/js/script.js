@@ -7,10 +7,10 @@ let requestURL = '';
 let requestIcon = '';
 let srchHist = [];
 const appid = '78bc832eeac2a213024b0c9cb066c83c';
-const apiRootZipURL = 'http://api.openweathermap.org/geo/1.0/zip?';
-const apiRootLocURL = 'http://api.openweathermap.org/geo/1.0/direct?';
+const apiRootZipURL = 'https://api.openweathermap.org/geo/1.0/zip?';
+const apiRootLocURL = 'https://api.openweathermap.org/geo/1.0/direct?';
 const openWeaApi = 'https://api.openweathermap.org/data/3.0/onecall?';
-let iconIdURL = 'http://openweathermap.org/img/wn/';
+let iconIdURL = 'https://openweathermap.org/img/wn/';
 const searchBtn = document.getElementById('button-addon2');
 const searchIpt = document.getElementById('locInput');
 
