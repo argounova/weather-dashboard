@@ -144,9 +144,6 @@ function getWeather(){
 
 function handleCurrent(data) {
     const date = new Date();
-    let day = date.getDate();
-    let month = date.getMonth() + 1;
-    let year = date.getFullYear();
     let newElement;
     let fTemp = Math.round(1.8 * (data.current.temp - 273) +32);
     let fTempFeels = Math.round(1.8 * (data.current.feels_like - 273) +32);
@@ -172,7 +169,7 @@ function handleCurrent(data) {
 
     // Create date
     newElement = document.createElement('h4');
-    newElement.append(`${month}/${day}/${year}`);
+    newElement.append(date.toDateString());
     document.getElementById('currentCity').append(newElement);
 
     // Create current city temperature
@@ -218,11 +215,12 @@ function handleCurrent(data) {
 }
 
 function handleForecast(data) {
-    const date = new Date();
-    let day = date.getDate() + 1;
-    let month = date.getMonth() + 1;
-    let year = date.getFullYear();
     for (var i = 1; i < 6; i++) {
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + i);
+        let day = tomorrow.getDate();
+        let month = tomorrow.getMonth() + 1;
+        let year = tomorrow.getFullYear();
         let newDiv = '';
         let newElement = '';
         let fTemp = Math.round(1.8 * (data.daily[i].temp.day - 273) +32);
@@ -243,7 +241,7 @@ function handleForecast(data) {
         // Create date
         newElement = document.createElement('h5');
         newElement.setAttribute('id', 'iconId' + i);
-        newElement.append(`${month}/${day++}/${year}`);
+        newElement.append(`${month}/${day}/${year}`);
         document.getElementById(i).append(newElement);
 
         // Create weather icon
