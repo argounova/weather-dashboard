@@ -17,7 +17,8 @@ Browser based application featuring a 5-day forecast, current weather and saved 
 
 ## Installation
 
-Copy and paste the provided URL into your favorite browser.
+Copy and paste the provided URL into your favorite browser:
+https://argounova.github.io/weather-dashboard/
 
 ## Usage
 
